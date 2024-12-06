@@ -48,3 +48,15 @@ class InventoryDuration(Base):
     id_date_end = Column(DateTime)
 
 Base.metadata.create_all(bind=engine)
+
+with Session((engine)) as db:
+    main_currency = Currencies(c_name="Гривня", c_short_name="UAH", c_is_main=True)
+    db.add(main_currency)
+    db.commit()
+    db.refresh(main_currency)
+    main_currency_nominals = [1000, 500, 200, 100, 50, 20, 10, 5, 2, 1]
+    for nominal in main_currency_nominals:
+        main_currency_nominal = CurrencyNominals(cn_name=str(nominal), cn_nominal=nominal, cn_currency_id=main_currency.c_id)
+        db.add(main_currency_nominal)
+    db.commit()
+    db.refresh(main_currency_nominal)
