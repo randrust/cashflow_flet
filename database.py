@@ -49,14 +49,32 @@ class InventoryDuration(Base):
 
 Base.metadata.create_all(bind=engine)
 
-with Session((engine)) as db:
+def get_db_data(db_table):
+    with Session((engine)) as db:
+        data = db.query(db_table).all()
+        db.close()
+        return data
+
+def database_insert(data):
+    with Session((engine)) as db:
+        db.add(data)
+        db.commit()
+        db.refresh(data)
+        db.close()
+
+def create_nain_currency_uah():
     main_currency = Currencies(c_name="Гривня", c_short_name="UAH", c_is_main=True)
-    db.add(main_currency)
-    db.commit()
-    db.refresh(main_currency)
+    database_insert(main_currency)
+
     main_currency_nominals = [1000, 500, 200, 100, 50, 20, 10, 5, 2, 1]
     for nominal in main_currency_nominals:
-        main_currency_nominal = CurrencyNominals(cn_name=str(nominal), cn_nominal=nominal, cn_currency_id=main_currency.c_id)
-        db.add(main_currency_nominal)
-    db.commit()
-    db.refresh(main_currency_nominal)
+        currency_nominal = CurrencyNominals(cn_name=str(nominal), cn_nominal=nominal, cn_currency_id=main_currency.c_id)
+        database_insert(currency_nominal)
+
+def create_administrator():
+    user = Users(u_username="admin", u_password="090799", u_hash_device="bnsdfkhgoegnvm,avfnaigfvniog718745094")
+    database_insert(user)
+
+def insert_cash_recipt(data):
+    cash_recipt = CashRecipts(cr_date=data['cr_date'], cr_currency_nominal_id=data['cr_currency_nominal_id'], cr_currency_nominal_amount=data['cr_currency_nominal_amount'], cr_user=data['cr_user'], cr_is_synchronized=data['cr_is_synchronized'])
+    database_insert(cash_recipt)
