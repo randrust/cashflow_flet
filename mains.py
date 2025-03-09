@@ -93,18 +93,58 @@ def main(page: ft.Page):
 
 
     page.add(
-        ft.Row(
-            [
-                date_from,
-                ft.Text(" <---> "),
-                date_to,
-            ],
-            alignment=ft.MainAxisAlignment.CENTER,
-        ),
-        ft.Row(
-            [data_table,],
-            alignment=ft.MainAxisAlignment.CENTER,
-        ),
+        # ft.Row(
+        #     [
+        #         date_from,
+        #         ft.Text(" <---> "),
+        #         date_to,
+        #     ],
+        #     alignment=ft.MainAxisAlignment.CENTER,
+        # ),
+        # ft.Row(
+        #     [data_table,],
+        #     alignment=ft.MainAxisAlignment.CENTER,
+        # ),
+        ft.Row([
+            ft.Text("1000 x"),
+            ft.TextField(value=0, input_filter=ft.NumbersOnlyInputFilter()),
+            ft.Text("="),
+            ft.Text("0")
+        ],
+        alignment=ft.MainAxisAlignment.CENTER),
+        ft.Row([
+            ft.Text(" 500 x"),
+            ft.TextField(value=0, input_filter=ft.NumbersOnlyInputFilter()),
+            ft.Text("="),
+            ft.Text("0")
+        ],
+        alignment=ft.MainAxisAlignment.CENTER),
+        ft.Row([
+            ft.Text(" 200 x"),
+            ft.TextField(value=0, input_filter=ft.NumbersOnlyInputFilter()),
+            ft.Text("="),
+            ft.Text("0")
+        ],
+        alignment=ft.MainAxisAlignment.CENTER),
+        ft.Row([
+            ft.Text(" 100 x"),
+            ft.TextField(value=0, input_filter=ft.NumbersOnlyInputFilter()),
+            ft.Text("="),
+            ft.Text("0")
+        ],
+        alignment=ft.MainAxisAlignment.CENTER),
+        ft.Row([
+            ft.Text("  50 x"),
+            ft.TextField(value=0, input_filter=ft.NumbersOnlyInputFilter()),
+            ft.Text("="),
+            ft.Text("0")
+        ],
+        alignment=ft.MainAxisAlignment.CENTER),
+        ft.Row([
+            ft.Text("Всього:"),
+            ft.Text("0")
+        ],
+        alignment=ft.MainAxisAlignment.CENTER),
     )
 
 ft.app(main)
